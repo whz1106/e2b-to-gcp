@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS "public"."tiers"
     "name"                 text   NOT NULL,
     "vcpu"                 bigint NOT NULL default '2'::bigint,
     "ram_mb"               bigint NOT NULL DEFAULT '512'::bigint,
-    "disk_mb"              bigint NOT NULL DEFAULT '512'::bigint,
+    "disk_mb"              bigint NOT NULL DEFAULT '8192'::bigint,
     "concurrent_instances" bigint NOT NULL,
     PRIMARY KEY ("id"),
     constraint tiers_concurrent_sessions_check check ((concurrent_instances > 0)),
