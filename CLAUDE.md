@@ -216,7 +216,8 @@ go test -race -v -run TestCreateSandbox ./internal/handlers
 
 ### Environment Variables
 - Environment configs: `.env.{prod,staging,dev}`
-- Template: `.env.template`
+- GCP template: `.env.gcp.template`
+- AWS template: `.env.aws.template`
 - Switch: `make switch-env ENV=staging`
 - Secrets stored in GCP Secrets Manager (production)
 
@@ -263,12 +264,13 @@ Self-hosting is fully supported on GCP (AWS in progress). See `self-host.md` for
 
 Key steps:
 1. Create GCP project and configure quotas
-2. Create `.env.{prod,staging,dev}` from `.env.template`
+2. Create `.env.{prod,staging,dev}` from `.env.gcp.template`
 3. Run `make switch-env ENV=<env>`
-4. Run `make login-gcloud && make init`
-5. Run `make build-and-upload && make copy-public-builds`
-6. Configure secrets in GCP Secrets Manager
-7. Run `make plan && make apply`
+4. Run `make provider-login && make init`
+5. Run `make gcp-sync-secrets`
+6. Run `make build-and-upload && make copy-public-builds`
+7. Run `make plan-without-jobs && make apply`
+8. Run `make plan && make apply`
 
 ## Debugging
 

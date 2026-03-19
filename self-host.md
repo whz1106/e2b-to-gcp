@@ -57,10 +57,10 @@ Check if you can use config for terraform state management
 
 1. Go to `console.cloud.google.com` and create a new GCP project
     > Make sure your Quota allows you to have at least 2500G for `Persistent Disk SSD (GB)` and at least 24 for `CPUs`
-2. Create `.env.prod`, `.env.staging`, or `.env.dev` from [`.env.template`](.env.template). You can pick any of them. Make sure to fill in the values. All are required if not specified otherwise.
+2. Create `.env.prod`, `.env.staging`, or `.env.dev` from [`.env.gcp.template`](.env.gcp.template). You can pick any of them. Make sure to fill in the values. All are required if not specified otherwise.
     > Get Postgres database connection string from your database, e.g. [from Supabase](https://supabase.com/docs/guides/database/connecting-to-postgres#direct-connection): Create a new project in Supabase and go to your project in Supabase -> Settings -> Database -> Connection Strings -> Postgres -> Direct or Shared
     > The variant needs to be IPv4 compatible. You can either use Shared or use the IPv4 add-on in Connect screen
-3. Run `make set-env ENV={prod,staging,dev}` to start using your env
+3. Run `make switch-env ENV={prod,staging,dev}` to start using your env
 4. Run `make provider-login` to login to `gcloud`
 5. Run `make init`. If this errors, run it a second time--it's due to a race condition on Terraform enabling API access for the various GCP services; this can take several seconds. A full list of services that will be enabled for API access:
    - [Secret Manager API](https://console.cloud.google.com/apis/library/secretmanager.googleapis.com)
@@ -73,17 +73,40 @@ Check if you can use config for terraform state management
    - [Filestore API](https://console.cloud.google.com/apis/library/file.googleapis.com)
 6. Run `make build-and-upload`
 7. Run `make copy-public-builds`. This will copy kernel and rootfs builds for Firecracker to your bucket. You can [build your own](#building-firecracker-and-uffd-from-source) kernel and Firecracker roots.
-8. For following secrets terraform creates only an empty secret containers in GCP Secrets Manager. You need to add a **secret version** with the actual value. Go to [GCP Secrets Manager](https://console.cloud.google.com/security/secret-manager), click on the secret, then click "New Version" to add the value for the following secrets:
+8. Sync the required secret values from your env file into GCP Secrets Manager:
+   ```sh
+   make gcp-sync-secrets
+   ```
+   Terraform creates the secret containers during `make init`; the sync command adds secret versions for the values you set in `.env.<env>`. At minimum you should populate:
   - e2b-cloudflare-api-token
       > Get Cloudflare API Token: go to the [Cloudflare dashboard](https://dash.cloudflare.com/) -> Manage Account -> Account API Tokens -> Create Token -> Edit Zone DNS -> in "Zone Resources" select your domain and generate the token
   - e2b-postgres-connection-string (**required**)
   - e2b-supabase-jwt-secrets (optional / required to self-host the [E2B dashboard](https://github.com/e2b-dev/dashboard))
       > Get Supabase JWT Secret: go to the [Supabase dashboard](https://supabase.com/dashboard) -> Select your Project -> Project Settings -> Data API -> JWT Settings
   - e2b-posthog-api-key (optional, for monitoring)
+   You can still add versions manually in [GCP Secrets Manager](https://console.cloud.google.com/security/secret-manager) if needed.
 9. Run `make plan-without-jobs` and then `make apply`
 10. Run `make plan` and then `make apply`. Note: This will work after the TLS certificates was issued. It can take some time; you can check the status in the Google Cloud Console. Database migrations run automatically via the API's db-migrator task.
 11. Setup data in the cluster by running `make prep-cluster` in `packages/shared` to create an initial user, team, and build a base template.
   - You can also run `make seed-db` in `packages/db` to create more users and teams.
+
+### One-command GCP flow
+
+If your `.env.<env>` file is already complete, you can run the documented flow end-to-end with:
+
+```sh
+./scripts/deploy-gcp.sh <env>
+```
+
+This wraps:
+- `make switch-env`
+- `make provider-login`
+- `make init`
+- `make gcp-sync-secrets`
+- `make build-and-upload`
+- `make copy-public-builds`
+- `make plan-without-jobs && make apply`
+- `make plan && make apply`
 
 ### GCP Troubleshooting
 

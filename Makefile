@@ -119,6 +119,14 @@ else
 	gsutil cp -r gs://e2b-prod-public-builds/firecrackers/* gs://$(GCP_BUCKET_PREFIX)fc-versions/
 endif
 
+.PHONY: gcp-sync-secrets
+gcp-sync-secrets:
+	./scripts/gcp-sync-secrets.sh $(ENV)
+
+.PHONY: deploy-gcp
+deploy-gcp:
+	./scripts/deploy-gcp.sh $(ENV)
+
 .PHONY: download-public-kernels
 download-public-kernels:
 	mkdir -p ./packages/fc-kernels

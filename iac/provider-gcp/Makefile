@@ -209,7 +209,15 @@ move:
 # Login for Terraform (uses application default creds)
 .PHONY: provider-login
 provider-login:
-	gcloud --quiet auth login
+	@if gcloud auth list --filter=status:ACTIVE --format="value(account)" | grep -q .; then \
+		echo "Using existing gcloud user credentials"; \
+	else \
+		gcloud --quiet auth login; \
+	fi
 	gcloud config set project "$(GCP_PROJECT_ID)"
 	gcloud --quiet auth configure-docker "$(GCP_REGION)-docker.pkg.dev"
-	gcloud --quiet auth application-default login
+	@if gcloud auth application-default print-access-token >/dev/null 2>&1; then \
+		echo "Using existing application default credentials"; \
+	else \
+		gcloud --quiet auth application-default login; \
+	fi
