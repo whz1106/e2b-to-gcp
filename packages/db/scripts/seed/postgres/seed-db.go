@@ -19,6 +19,10 @@ import (
 func main() {
 	ctx := context.Background()
 	hasher := keys.NewSHA256Hashing()
+	teamTier := os.Getenv("SEED_TEAM_TIER")
+	if teamTier == "" {
+		teamTier = "base_v1"
+	}
 
 	// Prompt user for values
 	reader := bufio.NewReader(os.Stdin)
@@ -60,6 +64,7 @@ func main() {
 	fmt.Println("Seeding database with:")
 	fmt.Printf("  Email: %s\n", email)
 	fmt.Printf("  Team ID: %s\n", teamUUID)
+	fmt.Printf("  Team Tier: %s\n", teamTier)
 	fmt.Printf("  Access Token: %s\n", accessToken.PrefixedRawValue)
 	fmt.Printf("  Team API Key: %s\n", teamAPIKey.PrefixedRawValue)
 	fmt.Println()
@@ -108,7 +113,7 @@ DELETE FROM teams WHERE email = $1
 	err = authDb.TestsRawSQL(ctx, `
 INSERT INTO teams (id, email, name, tier, is_blocked, slug)
 VALUES ($1, $2, $3, $4, $5, $6)
-`, teamUUID, email, "E2B", "base_v1", false, "e2b")
+`, teamUUID, email, "E2B", teamTier, false, "e2b")
 	if err != nil {
 		panic(err)
 	}
