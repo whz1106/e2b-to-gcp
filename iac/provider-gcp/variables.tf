@@ -490,7 +490,7 @@ variable "client_clusters_config" {
 
     machine = object({
       type             = string
-      min_cpu_platform = string
+      min_cpu_platform = optional(string)
     })
 
     autoscaler = optional(object({
@@ -550,7 +550,7 @@ variable "build_clusters_config" {
 
     machine = object({
       type             = string
-      min_cpu_platform = string
+      min_cpu_platform = optional(string)
     })
 
     autoscaler = optional(object({
@@ -609,6 +609,12 @@ variable "api_boot_disk_type" {
   description = "The GCE boot disk type for the API machines."
   type        = string
   default     = "pd-ssd"
+}
+
+variable "api_boot_disk_size_gb" {
+  description = "The GCE boot disk size (in GB) for the API machines."
+  type        = number
+  default     = 200
 }
 
 variable "server_boot_disk_type" {

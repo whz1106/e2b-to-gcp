@@ -1,0 +1,381 @@
+{
+  "meta": {
+    "test_id": "concurrency-20260324T031652Z-20",
+    "test_time": "2026-03-24T03:16:52.666384+00:00",
+    "environment": "dev",
+    "domain": "agentyard.top",
+    "template_id": "base",
+    "concurrency": 20,
+    "hold_seconds": 180,
+    "timeout": 200,
+    "cleanup": true,
+    "command": "python3 -c \"print(\\\"concurrency-ok\\\")\""
+  },
+  "summary": {
+    "total": 20,
+    "success": 10,
+    "failed": 10,
+    "success_rate": 50.0,
+    "cleanup_enabled": true,
+    "total_duration_seconds": 206.65,
+    "create_seconds_stats": {
+      "min": 13.26,
+      "max": 25.31,
+      "avg": 22.73
+    },
+    "command_seconds_stats": {
+      "min": 0.0,
+      "max": 10.1,
+      "avg": 1.95
+    },
+    "error_summary": {
+      "placement_failed": 10
+    },
+    "successful_sandbox_ids": [
+      "ino5eyetlkqtk3y3wkr6s",
+      "ik0w4sf9u0ocai76k5bwc",
+      "iztfby265sib1kuusrcg8",
+      "iqeuxqtqy8t0muv0hxk1l",
+      "isupw6z5ls1wah3b5ogu6",
+      "iacc54howlmkgm291zoj2",
+      "iwtvarngmosevoffxoamr",
+      "in8ro1mkype7aw4k8lrlr",
+      "iicbhnnv3iy2rp4uzrehq",
+      "i66vvfeouo3lbd50t3ik3"
+    ],
+    "failed_workers": [
+      {
+        "index": 1,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 2,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 5,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 11,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 12,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 13,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 15,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 18,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 19,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 20,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      }
+    ]
+  },
+  "results": [
+    {
+      "index": 1,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.357312671025284,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 2,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.325059179973323,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 3,
+      "success": true,
+      "sandbox_id": "ino5eyetlkqtk3y3wkr6s",
+      "create_seconds": 20.493205431033857,
+      "command_seconds": 4.500515156018082,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 4,
+      "success": true,
+      "sandbox_id": "ik0w4sf9u0ocai76k5bwc",
+      "create_seconds": 25.308682116039563,
+      "command_seconds": 0.9424167829565704,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 5,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.348016700008884,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 6,
+      "success": true,
+      "sandbox_id": "iztfby265sib1kuusrcg8",
+      "create_seconds": 24.416446352028288,
+      "command_seconds": 1.0554871920030564,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 7,
+      "success": true,
+      "sandbox_id": "iqeuxqtqy8t0muv0hxk1l",
+      "create_seconds": 20.852303503022995,
+      "command_seconds": 4.0843127380358055,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 8,
+      "success": true,
+      "sandbox_id": "isupw6z5ls1wah3b5ogu6",
+      "create_seconds": 15.781736320001073,
+      "command_seconds": 7.60605098400265,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 9,
+      "success": true,
+      "sandbox_id": "iacc54howlmkgm291zoj2",
+      "create_seconds": 21.569876993948128,
+      "command_seconds": 3.6594265429885127,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 10,
+      "success": true,
+      "sandbox_id": "iwtvarngmosevoffxoamr",
+      "create_seconds": 13.263353224960156,
+      "command_seconds": 10.09930440201424,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 11,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.32916836498771,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 12,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.32245293795131,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 13,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.317241327022202,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 14,
+      "success": true,
+      "sandbox_id": "in8ro1mkype7aw4k8lrlr",
+      "create_seconds": 21.213625979959033,
+      "command_seconds": 4.069519776967354,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 15,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.320463168027345,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 16,
+      "success": true,
+      "sandbox_id": "iicbhnnv3iy2rp4uzrehq",
+      "create_seconds": 23.987715884053614,
+      "command_seconds": 1.723001440986991,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 17,
+      "success": true,
+      "sandbox_id": "i66vvfeouo3lbd50t3ik3",
+      "create_seconds": 24.54893385496689,
+      "command_seconds": 1.3474918229621835,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 18,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.29702920897398,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 19,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.313901769986842,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 20,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 24.289064200012945,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    }
+  ]
+}

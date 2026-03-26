@@ -20,7 +20,8 @@ variable "machine_type" {
 }
 
 variable "min_cpu_platform" {
-  type = string
+  type     = string
+  nullable = true
 }
 
 variable "boot_disk" {

@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "test_id": "concurrency-20260324T035834Z-5",
+    "test_time": "2026-03-24T03:58:34.986698+00:00",
+    "environment": "dev",
+    "domain": "agentyard.top",
+    "template_id": "base",
+    "concurrency": 5,
+    "hold_seconds": 180,
+    "timeout": 200,
+    "cleanup": true,
+    "command": "python3 -c \"print(\\\"concurrency-ok\\\")\""
+  },
+  "summary": {
+    "total": 5,
+    "success": 5,
+    "failed": 0,
+    "success_rate": 100.0,
+    "cleanup_enabled": true,
+    "total_duration_seconds": 189.12,
+    "create_seconds_stats": {
+      "min": 3.25,
+      "max": 6.12,
+      "avg": 4.64
+    },
+    "command_seconds_stats": {
+      "min": 2.16,
+      "max": 3.77,
+      "avg": 3.05
+    },
+    "error_summary": {},
+    "successful_sandbox_ids": [
+      "ioeekz6kza421erxd0h2s",
+      "iwc4pz09k39v7nczxqlg1",
+      "ihyz8r115tjw5ci2r27te",
+      "iuxdphriw4iqv2ewylvoe",
+      "iny14v0xi4fiwyfgly2vo"
+    ],
+    "failed_workers": []
+  },
+  "results": [
+    {
+      "index": 1,
+      "success": true,
+      "sandbox_id": "ioeekz6kza421erxd0h2s",
+      "create_seconds": 6.11982652801089,
+      "command_seconds": 2.160573104978539,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 2,
+      "success": true,
+      "sandbox_id": "iwc4pz09k39v7nczxqlg1",
+      "create_seconds": 3.876078856003005,
+      "command_seconds": 3.738380054011941,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 3,
+      "success": true,
+      "sandbox_id": "ihyz8r115tjw5ci2r27te",
+      "create_seconds": 4.207739912031684,
+      "command_seconds": 2.9345622560358606,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 4,
+      "success": true,
+      "sandbox_id": "iuxdphriw4iqv2ewylvoe",
+      "create_seconds": 5.750024404027499,
+      "command_seconds": 2.659565075999126,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 5,
+      "success": true,
+      "sandbox_id": "iny14v0xi4fiwyfgly2vo",
+      "create_seconds": 3.245120442006737,
+      "command_seconds": 3.7661251130048186,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    }
+  ]
+}

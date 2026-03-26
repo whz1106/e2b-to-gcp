@@ -4,6 +4,10 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "4.52.5"
     }
+    time = {
+      source  = "hashicorp/time"
+      version = ">= 0.9.1"
+    }
   }
 }
 
@@ -368,7 +372,8 @@ resource "google_compute_backend_service" "default" {
   }
 
   depends_on = [
-    google_compute_health_check.default
+    google_compute_health_check.default,
+    time_sleep.security_policy_ready
   ]
 }
 
@@ -434,6 +439,14 @@ resource "google_compute_security_policy" "default" {
       }
     }
   }
+}
+
+resource "time_sleep" "security_policy_ready" {
+  for_each = google_compute_security_policy.default
+
+  create_duration = "60s"
+
+  depends_on = [google_compute_security_policy.default]
 }
 
 # Firewalls

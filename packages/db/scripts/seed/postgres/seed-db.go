@@ -45,6 +45,7 @@ func main() {
 	}
 
 	teamUUID := uuid.New()
+	teamSlug := fmt.Sprintf("e2b-%s", teamUUID.String()[:8])
 
 	accessToken, err := keys.GenerateKey(keys.AccessTokenPrefix)
 	if err != nil {
@@ -64,6 +65,7 @@ func main() {
 	fmt.Println("Seeding database with:")
 	fmt.Printf("  Email: %s\n", email)
 	fmt.Printf("  Team ID: %s\n", teamUUID)
+	fmt.Printf("  Team Slug: %s\n", teamSlug)
 	fmt.Printf("  Team Tier: %s\n", teamTier)
 	fmt.Printf("  Access Token: %s\n", accessToken.PrefixedRawValue)
 	fmt.Printf("  Team API Key: %s\n", teamAPIKey.PrefixedRawValue)
@@ -113,7 +115,7 @@ DELETE FROM teams WHERE email = $1
 	err = authDb.TestsRawSQL(ctx, `
 INSERT INTO teams (id, email, name, tier, is_blocked, slug)
 VALUES ($1, $2, $3, $4, $5, $6)
-`, teamUUID, email, "E2B", teamTier, false, "e2b")
+`, teamUUID, email, "E2B", teamTier, false, teamSlug)
 	if err != nil {
 		panic(err)
 	}

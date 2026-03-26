@@ -153,6 +153,10 @@ resource "google_compute_instance_template" "template" {
   machine_type         = var.machine_type
   min_cpu_platform     = var.min_cpu_platform
 
+  advanced_machine_features {
+    enable_nested_virtualization = true
+  }
+
   labels = merge(
     var.labels,
     (var.environment != "dev" ? {

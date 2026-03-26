@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "test_id": "concurrency-20260324T025607Z-15",
+    "test_time": "2026-03-24T02:56:07.052671+00:00",
+    "environment": "dev",
+    "domain": "agentyard.top",
+    "template_id": "base",
+    "concurrency": 15,
+    "hold_seconds": 180,
+    "timeout": 200,
+    "cleanup": true,
+    "command": "python3 -c \"print(\\\"concurrency-ok\\\")\""
+  },
+  "summary": {
+    "total": 15,
+    "success": 13,
+    "failed": 2,
+    "success_rate": 86.67,
+    "cleanup_enabled": true,
+    "total_duration_seconds": 299.46,
+    "create_seconds_stats": {
+      "min": 12.8,
+      "max": 95.39,
+      "avg": 29.93
+    },
+    "command_seconds_stats": {
+      "min": 0.0,
+      "max": 60.47,
+      "avg": 14.14
+    },
+    "error_summary": {
+      "placement_failed": 1,
+      "timeout": 1
+    },
+    "successful_sandbox_ids": [
+      "ibysi32bo8t3w7cuy09rc",
+      "ix5gnvvgpdv1xlp6ihvxe",
+      "ibk8cszcwgglrj714owna",
+      "ivni70bgvhxc8u0lnnazr",
+      "ix7tlvcj9ijhk1islsb5d",
+      "i53etc7us6zfg1lol3cok",
+      "i2q7kw7n5saracvb4uog2",
+      "idnrk67rmz7r047mxz4e6",
+      "iurwao7r7rntuxmalgymx",
+      "i9azil380mb9a3aa8vihn",
+      "i97xnp50kby0njl0jlfmh",
+      "i0qgexig60euoitqlg3f5",
+      "ii1dxp0smgkaezhiffhfq"
+    ],
+    "failed_workers": [
+      {
+        "index": 10,
+        "sandbox_id": null,
+        "error_type": "placement_failed",
+        "error_message": "500: Failed to place sandbox",
+        "exit_code": null
+      },
+      {
+        "index": 11,
+        "sandbox_id": "il5od6c3r5x6v1co9ycrx",
+        "error_type": "timeout",
+        "error_message": "context deadline exceeded: This error is likely due to exceeding 'timeout' \u2014 the total time a long running request (like process or directory watch) can be active. It can be modified by passing 'timeout' when making the request. Use '0' to disable the timeout.",
+        "exit_code": null
+      }
+    ]
+  },
+  "results": [
+    {
+      "index": 1,
+      "success": true,
+      "sandbox_id": "ibysi32bo8t3w7cuy09rc",
+      "create_seconds": 25.479249603988137,
+      "command_seconds": 34.655611249036156,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 2,
+      "success": true,
+      "sandbox_id": "ix5gnvvgpdv1xlp6ihvxe",
+      "create_seconds": 24.496038808021694,
+      "command_seconds": 30.96345137897879,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 3,
+      "success": true,
+      "sandbox_id": "ibk8cszcwgglrj714owna",
+      "create_seconds": 21.677499286015518,
+      "command_seconds": 5.74596825503977,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 4,
+      "success": true,
+      "sandbox_id": "ivni70bgvhxc8u0lnnazr",
+      "create_seconds": 13.17992686101934,
+      "command_seconds": 6.744986088015139,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 5,
+      "success": true,
+      "sandbox_id": "ix7tlvcj9ijhk1islsb5d",
+      "create_seconds": 58.384945889003575,
+      "command_seconds": 60.46740104700439,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 6,
+      "success": true,
+      "sandbox_id": "i53etc7us6zfg1lol3cok",
+      "create_seconds": 13.822021875996143,
+      "command_seconds": 8.197074521973263,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 7,
+      "success": true,
+      "sandbox_id": "i2q7kw7n5saracvb4uog2",
+      "create_seconds": 29.155811011965852,
+      "command_seconds": 30.55097719200421,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 8,
+      "success": true,
+      "sandbox_id": "idnrk67rmz7r047mxz4e6",
+      "create_seconds": 15.747130261035636,
+      "command_seconds": 7.964459396025632,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 9,
+      "success": true,
+      "sandbox_id": "iurwao7r7rntuxmalgymx",
+      "create_seconds": 14.495142063009553,
+      "command_seconds": 7.505518990044948,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 10,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 60.785723075969145,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "placement_failed",
+      "error_message": "500: Failed to place sandbox"
+    },
+    {
+      "index": 11,
+      "success": false,
+      "sandbox_id": "il5od6c3r5x6v1co9ycrx",
+      "create_seconds": 95.38733589695767,
+      "command_seconds": 0.0,
+      "hold_seconds": 180,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "timeout",
+      "error_message": "context deadline exceeded: This error is likely due to exceeding 'timeout' \u2014 the total time a long running request (like process or directory watch) can be active. It can be modified by passing 'timeout' when making the request. Use '0' to disable the timeout."
+    },
+    {
+      "index": 12,
+      "success": true,
+      "sandbox_id": "i9azil380mb9a3aa8vihn",
+      "create_seconds": 26.120848261984065,
+      "command_seconds": 4.95243617601227,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 13,
+      "success": true,
+      "sandbox_id": "i97xnp50kby0njl0jlfmh",
+      "create_seconds": 12.802183920983225,
+      "command_seconds": 6.132797454949468,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 14,
+      "success": true,
+      "sandbox_id": "i0qgexig60euoitqlg3f5",
+      "create_seconds": 20.68923790700501,
+      "command_seconds": 4.443946519983001,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 15,
+      "success": true,
+      "sandbox_id": "ii1dxp0smgkaezhiffhfq",
+      "create_seconds": 16.734547818021383,
+      "command_seconds": 3.760720922029577,
+      "hold_seconds": 180,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    }
+  ]
+}

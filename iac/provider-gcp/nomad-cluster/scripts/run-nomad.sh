@@ -294,16 +294,23 @@ function generate_supervisor_config {
   local -r nomad_log_dir="$5"
   local nomad_user="$6"
   local -r use_sudo="$7"
+  local -r nomad_token="$8"
 
   if [[ "$use_sudo" == "true" ]]; then
     log_info "The --use-sudo flag is set, so running Nomad as the root user"
     nomad_user="root"
   fi
 
+  local -r nomad_command="$nomad_bin_dir/nomad agent -config $nomad_config_dir -data-dir $nomad_data_dir"
+  local supervisor_environment=""
+  if [[ -n "${nomad_token:-}" ]]; then
+    supervisor_environment="environment=NOMAD_TOKEN=\"$nomad_token\""
+  fi
+
   log_info "Creating Supervisor config file to run Nomad in $supervisor_config_path"
   cat >"$supervisor_config_path" <<EOF
 [program:nomad]
-command=$nomad_bin_dir/nomad agent -config $nomad_config_dir -data-dir $nomad_data_dir
+command=$nomad_command
 stdout_logfile=$nomad_log_dir/nomad-stdout.log
 stderr_logfile=$nomad_log_dir/nomad-error.log
 numprocs=1
@@ -312,6 +319,7 @@ autorestart=true
 stopsignal=INT
 minfds=65536
 user=$nomad_user
+${supervisor_environment}
 EOF
 }
 
@@ -450,7 +458,7 @@ function run {
   user=$(get_owner_of_path "$config_dir")
 
   generate_nomad_config "$server" "$client" "$num_servers" "$config_dir" "$user" "$consul_token" "$node_pool" "$orchestrator_job_version" "$node_labels"
-  generate_supervisor_config "$SUPERVISOR_CONFIG_PATH" "$config_dir" "$data_dir" "$bin_dir" "$log_dir" "$user" "$use_sudo"
+  generate_supervisor_config "$SUPERVISOR_CONFIG_PATH" "$config_dir" "$data_dir" "$bin_dir" "$log_dir" "$user" "$use_sudo" "${nomad_token:-}"
   start_nomad
 
   if [[ "$server" == "true" ]]; then

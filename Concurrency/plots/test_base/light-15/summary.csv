@@ -1,0 +1,14 @@
+file,group,test_id,test_time,profile,concurrency,hold_seconds,timeout,cleanup,domain,template_id,success,failed,total,success_rate,total_duration_seconds,create_avg,create_min,create_max,command_avg,command_min,command_max,error_summary
+001.json,root,concurrency-20260323T090441Z-15,2026-03-23T09:04:41.465783+00:00,light,15,120,200,True,agentyard.top,base,15,0,15,100.0,134.42,7.86,2.89,13.36,1.53,0.41,2.72,{}
+002.json,root,concurrency-20260323T092817Z-15,2026-03-23T09:28:17.906377+00:00,light,15,120,200,True,agentyard.top,base,15,0,15,100.0,131.68,6.73,3.13,10.83,1.82,0.41,2.85,{}
+003.json,root,concurrency-20260323T094013Z-15,2026-03-23T09:40:13.660780+00:00,light,15,120,200,True,agentyard.top,base,15,0,15,100.0,131.89,6.74,3.27,11.11,1.62,0.37,3.18,{}
+004.json,root,concurrency-20260323T095507Z-15,2026-03-23T09:55:07.605510+00:00,light,15,120,200,True,agentyard.top,base,15,0,15,100.0,130.71,6.16,2.97,9.52,1.81,0.53,3.5,{}
+005.json,root,concurrency-20260323T100242Z-15,2026-03-23T10:02:42.331806+00:00,light,15,120,200,True,agentyard.top,base,15,0,15,100.0,132.29,6.59,2.41,11.48,1.66,0.41,2.42,{}
+006.json,root,concurrency-20260323T114813Z-15,2026-03-23T11:48:13.991248+00:00,light,15,120,200,True,agentyard.top,base,0,15,15,0.0,0.84,0.79,0.73,0.82,0.0,0.0,0.0,"{""placement_failed"": 15}"
+007.json,root,concurrency-20260324T024511Z-15,2026-03-24T02:45:11.848014+00:00,light,15,180,200,True,agentyard.top,base,15,0,15,100.0,203.65,12.83,3.76,20.4,3.97,2.25,7.11,{}
+008.json,root,concurrency-20260324T024844Z-15,2026-03-24T02:48:44.491352+00:00,light,15,180,200,True,agentyard.top,base,15,0,15,100.0,196.36,8.63,1.73,14.68,3.32,1.29,5.31,{}
+009.json,root,concurrency-20260324T025213Z-15,2026-03-24T02:52:13.257457+00:00,light,15,180,200,True,agentyard.top,base,15,0,15,100.0,201.89,10.04,4.05,17.43,5.46,1.64,8.5,{}
+0010.json,root,concurrency-20260324T025607Z-15,2026-03-24T02:56:07.052671+00:00,light,15,180,200,True,agentyard.top,base,13,2,15,86.67,299.46,29.93,12.8,95.39,14.14,0.0,60.47,"{""placement_failed"": 1, ""timeout"": 1}"
+0011.json,root,concurrency-20260324T030225Z-15,2026-03-24T03:02:25.424099+00:00,light,15,180,200,True,agentyard.top,base,0,15,15,0.0,1.71,1.69,1.66,1.7,0.0,0.0,0.0,"{""placement_failed"": 15}"
+0012.json,root,concurrency-20260324T030550Z-15,2026-03-24T03:05:50.660117+00:00,light,15,180,200,True,agentyard.top,base,0,15,15,0.0,60.76,20.76,0.75,60.76,0.0,0.0,0.0,"{""api_limit"": 10, ""placement_failed"": 5}"
+0013.json,root,concurrency-20260324T033625Z-15,2026-03-24T03:36:25.061241+00:00,light,15,180,200,True,agentyard.top,base,14,1,15,93.33,211.82,7.78,2.72,16.14,5.98,0.0,8.28,"{""placement_failed"": 1}"

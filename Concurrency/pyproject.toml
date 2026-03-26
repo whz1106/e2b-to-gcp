@@ -1,0 +1,9 @@
+[project]
+name = "e2b-concurrency-test"
+version = "0.1.0"
+description = "Single-client sandbox concurrency test for self-hosted E2B."
+requires-python = ">=3.10"
+dependencies = [
+  "e2b",
+  "matplotlib",
+]

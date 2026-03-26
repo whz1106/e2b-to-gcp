@@ -1,0 +1,6 @@
+file,group,test_id,test_time,profile,concurrency,hold_seconds,timeout,cleanup,domain,template_id,success,failed,total,success_rate,total_duration_seconds,create_avg,create_min,create_max,command_avg,command_min,command_max,error_summary
+001.json,root,staggered-20260324T094404Z-10,2026-03-24T09:44:04.624988+00:00,light,0,180,200,True,agentyard.top,base,4,6,10,40.0,211.89,0.31,0.17,0.87,0.22,0.0,0.78,"{""placement_failed"": 6}"
+002.json,root,staggered-20260324T094842Z-8,2026-03-24T09:48:42.928352+00:00,light,0,180,200,True,agentyard.top,base,4,4,8,50.0,211.52,0.33,0.17,0.52,0.19,0.0,0.43,"{""placement_failed"": 4}"
+003.json,root,staggered-20260324T095303Z-6,2026-03-24T09:53:03.517380+00:00,light,0,180,200,True,agentyard.top,base,4,2,6,66.67,211.4,0.33,0.17,0.5,0.25,0.0,0.43,"{""placement_failed"": 2}"
+004.json,root,staggered-20260324T095729Z-5,2026-03-24T09:57:29.433999+00:00,light,0,180,200,True,agentyard.top,base,5,0,5,100.0,221.46,0.52,0.28,0.75,0.5,0.35,0.65,{}
+005.json,root,staggered-20260324T100146Z-5,2026-03-24T10:01:46.764823+00:00,light,0,180,200,True,agentyard.top,base,5,0,5,100.0,221.55,0.55,0.32,0.86,0.5,0.36,0.96,{}

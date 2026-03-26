@@ -21,6 +21,12 @@ Optional:
   LAUNCH_DARKLY_API_KEY
   ANALYTICS_COLLECTOR_HOST
   ANALYTICS_COLLECTOR_API_TOKEN
+  GRAFANA_OTLP_URL
+  GRAFANA_USERNAME
+  GRAFANA_OTEL_COLLECTOR_TOKEN
+  GRAFANA_LOGS_USER
+  GRAFANA_LOGS_URL
+  GRAFANA_LOGS_COLLECTOR_API_TOKEN
   REDIS_CLUSTER_URL
   REDIS_TLS_CA_BASE64
   ROUTING_DOMAINS_JSON
@@ -81,6 +87,12 @@ put_secret "${PREFIX}posthog-api-key" "${POSTHOG_API_KEY:-}"
 put_secret "${PREFIX}launch-darkly-api-key" "${LAUNCH_DARKLY_API_KEY:-}"
 put_secret "${PREFIX}analytics-collector-host" "${ANALYTICS_COLLECTOR_HOST:-}"
 put_secret "${PREFIX}analytics-collector-api-token" "${ANALYTICS_COLLECTOR_API_TOKEN:-}"
+put_secret "${PREFIX}grafana-otlp-url" "${GRAFANA_OTLP_URL:-}"
+put_secret "${PREFIX}grafana-username" "${GRAFANA_USERNAME:-}"
+put_secret "${PREFIX}grafana-otel-collector-token" "${GRAFANA_OTEL_COLLECTOR_TOKEN:-}"
+put_secret "${PREFIX}grafana-logs-user" "${GRAFANA_LOGS_USER:-}"
+put_secret "${PREFIX}grafana-logs-url" "${GRAFANA_LOGS_URL:-}"
+put_secret "${PREFIX}grafana-api-key-logs-collector" "${GRAFANA_LOGS_COLLECTOR_API_TOKEN:-}"
 put_secret "${PREFIX}redis-cluster-url" "${REDIS_CLUSTER_URL:-}"
 put_secret "${PREFIX}redis-tls-ca-base64" "${REDIS_TLS_CA_BASE64:-}"
 put_secret "${PREFIX}routing-domains" "${ROUTING_DOMAINS_JSON:-}"

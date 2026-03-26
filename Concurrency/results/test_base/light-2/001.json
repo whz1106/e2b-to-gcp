@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "test_id": "concurrency-20260323T105702Z-2",
+    "test_time": "2026-03-23T10:57:02.044472+00:00",
+    "environment": "dev",
+    "domain": "agentyard.top",
+    "template_id": "base",
+    "concurrency": 2,
+    "hold_seconds": 120,
+    "timeout": 200,
+    "cleanup": true,
+    "command": "python3 -c \"print(\\\"concurrency-ok\\\")\""
+  },
+  "summary": {
+    "total": 2,
+    "success": 2,
+    "failed": 0,
+    "success_rate": 100.0,
+    "cleanup_enabled": true,
+    "total_duration_seconds": 125.21,
+    "create_seconds_stats": {
+      "min": 3.72,
+      "max": 4.04,
+      "avg": 3.88
+    },
+    "command_seconds_stats": {
+      "min": 0.44,
+      "max": 0.6,
+      "avg": 0.52
+    },
+    "error_summary": {},
+    "successful_sandbox_ids": [
+      "iod6o7g0or8nbq007tnuf",
+      "iky1h6sqqnl2vn5ablhsv"
+    ],
+    "failed_workers": []
+  },
+  "results": [
+    {
+      "index": 1,
+      "success": true,
+      "sandbox_id": "iod6o7g0or8nbq007tnuf",
+      "create_seconds": 3.7198735629790463,
+      "command_seconds": 0.6033932610298507,
+      "hold_seconds": 120,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    },
+    {
+      "index": 2,
+      "success": true,
+      "sandbox_id": "iky1h6sqqnl2vn5ablhsv",
+      "create_seconds": 4.042071070987731,
+      "command_seconds": 0.43702517997007817,
+      "hold_seconds": 120,
+      "exit_code": 0,
+      "stdout": "concurrency-ok",
+      "stderr": "",
+      "error_type": null,
+      "error_message": null
+    }
+  ]
+}

@@ -171,6 +171,7 @@ module "cluster" {
 
   # Boot disks
   api_boot_disk_type        = var.api_boot_disk_type
+  api_boot_disk_size_gb     = var.api_boot_disk_size_gb
   server_boot_disk_type     = var.server_boot_disk_type
   server_boot_disk_size_gb  = var.server_boot_disk_size_gb
   clickhouse_boot_disk_type = var.clickhouse_boot_disk_type

@@ -71,7 +71,8 @@ mkdir -p /orchestrator/build
 
 # Add swapfile
 SWAPFILE="/swapfile"
-fallocate -l 100G $SWAPFILE
+# Test-sized worker swapfile. This still lives on the boot disk.
+fallocate -l 50G $SWAPFILE
 chmod 600 $SWAPFILE
 mkswap $SWAPFILE
 swapon $SWAPFILE
@@ -376,9 +377,9 @@ for i in $(seq 1 $FETCH_MAX_ATTEMPTS); do
   sleep $FETCH_INTERVAL_SECONDS
 done
 
-/opt/nomad/bin/run-nomad.sh --client --consul-token "${CONSUL_TOKEN}" --node-pool "${NODE_POOL}" --node-labels "${NODE_LABELS}" --orchestrator-job-version "$ORCHESTRATOR_VERSION" &
+/opt/nomad/bin/run-nomad.sh --client --consul-token "${CONSUL_TOKEN}" --nomad-token "${NOMAD_TOKEN}" --node-pool "${NODE_POOL}" --node-labels "${NODE_LABELS}" --orchestrator-job-version "$ORCHESTRATOR_VERSION" &
 %{ else }
-/opt/nomad/bin/run-nomad.sh --client --consul-token "${CONSUL_TOKEN}" --node-pool "${NODE_POOL}" --node-labels "${NODE_LABELS}" &
+/opt/nomad/bin/run-nomad.sh --client --consul-token "${CONSUL_TOKEN}" --nomad-token "${NOMAD_TOKEN}" --node-pool "${NODE_POOL}" --node-labels "${NODE_LABELS}" &
 %{ endif }
 
 # Add alias for ssh-ing to sbx

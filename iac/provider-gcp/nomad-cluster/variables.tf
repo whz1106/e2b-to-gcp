@@ -117,7 +117,7 @@ variable "client_clusters_config" {
     }))
     machine = object({
       type             = string
-      min_cpu_platform = string
+      min_cpu_platform = optional(string)
     })
     boot_disk = object({
       disk_type = string
@@ -150,7 +150,7 @@ variable "build_clusters_config" {
     }))
     machine = object({
       type             = string
-      min_cpu_platform = string
+      min_cpu_platform = optional(string)
     })
     boot_disk = object({
       disk_type = string
@@ -347,6 +347,11 @@ variable "api_nat_min_ports_per_vm" {
 variable "api_boot_disk_type" {
   description = "The GCE boot disk type for the API machines."
   type        = string
+}
+
+variable "api_boot_disk_size_gb" {
+  description = "The GCE boot disk size in GB for the API machines."
+  type        = number
 }
 
 variable "server_boot_disk_type" {
