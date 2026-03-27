@@ -19,7 +19,7 @@ import (
 var tracer = otel.Tracer("github.com/e2b-dev/infra/packages/api/internal/orchestrator")
 
 // cacheSyncTime is the time to sync the cache with the actual instances in Orchestrator.
-const cacheSyncTime = 20 * time.Second
+const cacheSyncTime = 10 * time.Second
 
 const nodeConnectTimeout = 5 * time.Second
 

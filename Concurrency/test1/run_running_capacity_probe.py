@@ -183,7 +183,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-sandboxes", type=int, default=20, help="Upper bound of create attempts.")
     parser.add_argument(
         "--interval-seconds",
-        type=int,
+        type=float,
         default=10,
         help="Seconds to wait between create attempts. Default: 10.",
     )
@@ -522,8 +522,8 @@ def main() -> int:
 
     if args.max_sandboxes <= 0:
         raise RuntimeError("--max-sandboxes must be greater than 0")
-    if args.interval_seconds <= 0:
-        raise RuntimeError("--interval-seconds must be greater than 0")
+    if args.interval_seconds < 0:
+        raise RuntimeError("--interval-seconds must be >= 0")
     if args.retry_after_release_seconds < 0:
         raise RuntimeError("--retry-after-release-seconds must be >= 0")
     if args.command_timeout <= 0:
