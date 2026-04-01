@@ -133,20 +133,6 @@ build {
     ]
   }
 
-  provisioner "file" {
-    source      = "${path.root}/setup/gc-ops.config.yaml"
-    destination = "/tmp/gc-ops.config.yaml"
-  }
-
-  provisioner "shell" {
-    inline = [
-      "sudo curl -sSO https://dl.google.com/cloudagents/add-google-cloud-ops-agent-repo.sh",
-      "sudo bash add-google-cloud-ops-agent-repo.sh --also-install",
-      "sudo mkdir -p /etc/google-cloud-ops-agent",
-      "sudo mv /tmp/gc-ops.config.yaml /etc/google-cloud-ops-agent/config.yaml",
-    ]
-  }
-
   provisioner "shell" {
     inline = [
       # Increase the maximum number of open files

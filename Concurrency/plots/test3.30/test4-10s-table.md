@@ -1,0 +1,20 @@
+| index | phase | success | sandbox_id | started_s | ready_s | finished_s | create_s | command_s | run_window_s | exit_code | error_type | error_message |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | initial | Y | i46kdho0ue0lcvwjdytmu | 0.00 | 4.48 | 200.00 | 3.62 | 0.86 | 200.00 | 0 | - | - |
+| 2 | initial | Y | iio5j2kmnpthfujajqs22 | 10.00 | 10.80 | 210.00 | 0.44 | 0.36 | 200.00 | 0 | - | - |
+| 3 | initial | Y | iwcm0ztu8ql1r45b832wg | 20.00 | 20.86 | 220.00 | 0.42 | 0.43 | 200.00 | 0 | - | - |
+| 4 | initial | Y | i5kwcwk6qtg0z7wmnm3uz | 30.00 | 30.78 | 230.00 | 0.45 | 0.32 | 200.00 | 0 | - | - |
+| 5 | initial | Y | i7z3ysj81dsbw6kxl92n6 | 40.01 | 40.77 | 240.01 | 0.43 | 0.33 | 200.00 | 0 | - | - |
+| 6 | initial | Y | id95eaf20f3kdfsio0l2x | 50.01 | 50.83 | 250.01 | 0.45 | 0.37 | 200.00 | 0 | - | - |
+| 7 | initial | Y | ia8bsqfytd0h6s7dgwtp7 | 60.01 | 60.81 | 260.01 | 0.46 | 0.34 | 200.00 | 0 | - | - |
+| 8 | initial | Y | ijubzggvz9rsykgxtcxvu | 70.01 | 70.80 | 270.01 | 0.48 | 0.31 | 200.00 | 0 | - | - |
+| 9 | initial | Y | iion6pnm0w0r8vni0uls2 | 80.01 | 80.78 | 280.01 | 0.44 | 0.33 | 200.00 | 0 | - | - |
+| 10 | initial | Y | id9egbzq4xiqbnnic20fs | 90.01 | 90.84 | 290.01 | 0.49 | 0.34 | 200.00 | 0 | - | - |
+| 11 | initial | Y | ip385g5tjvslhb6bxaack | 100.01 | 100.81 | 300.01 | 0.46 | 0.34 | 200.00 | 0 | - | - |
+| 12 | initial | Y | iuka8rv4uqc3k7a9tpc57 | 110.01 | 110.95 | 310.01 | 0.58 | 0.36 | 200.00 | 0 | - | - |
+| 13 | initial | Y | i8lm6nlj1mf0ndfz4jd1m | 120.02 | 121.10 | 320.02 | 0.75 | 0.33 | 200.00 | 0 | - | - |
+| 14 | initial | Y | iq73vmmyleevdttvhua8t | 130.02 | 131.23 | 330.02 | 0.88 | 0.32 | 200.00 | 0 | - | - |
+| 15 | initial | Y | ilqwgdy4qprik0p6jiyhz | 140.02 | 140.83 | 340.02 | 0.48 | 0.32 | 200.00 | 0 | - | - |
+| 16 | initial | Y | is72njvmbv9lfogi28hzm | 150.02 | 150.89 | 350.02 | 0.54 | 0.34 | 200.00 | 0 | - | - |
+| 17 | initial:create | N | - | 160.02 | 160.20 | 160.20 | 0.18 | 0.00 | 0.18 | - | placement_failed | 500: Failed to place sandbox |
+| 17 | retry_after_first_release:1 | Y | itb92jy5j9o7bbhod9fx9 | 355.64 | 356.80 | 555.64 | 0.81 | 0.35 | 200.00 | 0 | - | - |

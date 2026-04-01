@@ -82,12 +82,7 @@ resource "google_compute_instance_template" "loki" {
   instance_description = null
   machine_type         = var.loki_machine_type
 
-  labels = merge(
-    var.labels,
-    (var.environment != "dev" ? {
-      goog-ops-agent-policy = "v2-x86-template-1-2-0-${var.gcp_zone}"
-    } : {})
-  )
+  labels                  = var.labels
   tags                    = [var.cluster_tag_name]
   metadata_startup_script = local.loki_startup_script
   metadata = merge(
@@ -124,8 +119,6 @@ resource "google_compute_instance_template" "loki" {
     scopes = [
       "userinfo-email",
       "compute-ro",
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring.write",
       "https://www.googleapis.com/auth/trace.append",
       "https://www.googleapis.com/auth/cloud-platform"
     ]

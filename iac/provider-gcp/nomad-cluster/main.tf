@@ -70,17 +70,6 @@ resource "google_project_iam_member" "network_viewer" {
   role    = "roles/compute.networkViewer"
 }
 
-resource "google_project_iam_member" "monitoring_editor" {
-  project = var.gcp_project_id
-  member  = "serviceAccount:${var.google_service_account_email}"
-  role    = "roles/monitoring.editor"
-}
-resource "google_project_iam_member" "logging_writer" {
-  project = var.gcp_project_id
-  member  = "serviceAccount:${var.google_service_account_email}"
-  role    = "roles/logging.logWriter"
-}
-
 variable "setup_files" {
   type = map(string)
   default = {

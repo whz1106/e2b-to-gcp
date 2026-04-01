@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "test_id": "running-capacity-20260331T031621Z-20",
+    "test_time": "2026-03-31T03:16:21.739020+00:00",
+    "environment": "dev",
+    "domain": "agentyard.top",
+    "template_id": "fgh35m6j44r87c4kq9sj",
+    "max_sandboxes": 20,
+    "interval_seconds": 10.0,
+    "sandbox_timeout": 200,
+    "create_request_timeout": 0,
+    "command_timeout": 30,
+    "retry_after_release_seconds": 5,
+    "cleanup": true,
+    "keepalive_command": "sh -lc 'nohup python3 -c \"import time; time.sleep(200)\" >/tmp/running_capacity_probe_sleep.log 2>&1 & echo sleep-started'"
+  },
+  "summary": {
+    "total_results": 1,
+    "success": 0,
+    "failed": 1,
+    "cleanup_enabled": true,
+    "total_duration_seconds": 10.0,
+    "create_seconds_stats": {
+      "min": 0.86,
+      "max": 0.86,
+      "avg": 0.86
+    },
+    "command_seconds_stats": {
+      "min": 0.0,
+      "max": 0.0,
+      "avg": 0.0
+    },
+    "first_failure_index": 1,
+    "first_failure_error": "not_found",
+    "first_observed_failure_index": 1,
+    "first_observed_failure_error": "not_found",
+    "initial_success_count_total": 0,
+    "initial_success_count_before_failure": 0,
+    "max_simultaneous_running_estimate": 0,
+    "stable_running_capacity_estimate": 0,
+    "earliest_successful_index": null,
+    "first_runtime_failure_index": null,
+    "first_placement_failure_index": null,
+    "retry_attempted_after_first_release": false,
+    "retry_success_after_first_release": null,
+    "retry_attempt_count_after_first_release": 0,
+    "retry_create_seconds_after_first_release": null,
+    "retry_started_offset_seconds": null,
+    "retry_finished_offset_seconds": null,
+    "timeline": [
+      {
+        "index": 1,
+        "phase": "initial:create",
+        "success": false,
+        "sandbox_id": null,
+        "started_offset_seconds": 0.0,
+        "ready_offset_seconds": 0.86,
+        "finished_offset_seconds": 0.86,
+        "create_seconds": 0.86
+      }
+    ],
+    "note": "This probe now computes simultaneous-running estimates from actual [ready, finished) overlap windows. The observed failure that stopped new submissions may differ from the lowest worker index that eventually failed."
+  },
+  "results": [
+    {
+      "index": 1,
+      "success": false,
+      "sandbox_id": null,
+      "create_seconds": 0.8608974289963953,
+      "command_seconds": 0.0,
+      "sandbox_timeout": 200,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "error_type": "not_found",
+      "error_message": "404: template 'fgh35m6j44r87c4kq9sj' not found",
+      "phase": "initial:create",
+      "started_offset_seconds": 0.0,
+      "finished_offset_seconds": 0.86
+    }
+  ]
+}

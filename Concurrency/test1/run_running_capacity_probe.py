@@ -111,6 +111,27 @@ def seconds_stats(values: list[float]) -> dict[str, float]:
     }
 
 
+def max_overlap_count(results: list[ProbeResult]) -> int:
+    if not results:
+        return 0
+
+    events: list[tuple[float, int]] = []
+    for item in results:
+        # Treat the running interval as [ready, finished); if one sandbox finishes
+        # exactly when another becomes ready, they should not count as overlapping.
+        events.append((item.ready_offset_seconds, 1))
+        events.append((item.finished_offset_seconds, -1))
+
+    current = 0
+    maximum = 0
+    for _, delta in sorted(events, key=lambda event: (event[0], event[1])):
+        current += delta
+        if current > maximum:
+            maximum = current
+
+    return maximum
+
+
 def list_running_sandboxes(domain: str, api_key: str) -> list[Any]:
     paginator = Sandbox.list(api_key=api_key, domain=domain, limit=100)
     sandboxes: list[Any] = []
@@ -442,9 +463,8 @@ def summarize(
     results: list[ProbeResult],
     started: float,
     cleanup: bool,
-    first_failure_index: int | None,
-    first_failure_error: str | None,
-    initial_success_count: int,
+    first_observed_failure_index: int | None,
+    first_observed_failure_error: str | None,
     retry_attempted: bool,
     retry_success: bool | None,
     earliest_successful_index: int | None,
@@ -454,10 +474,21 @@ def summarize(
     failed_results = [item for item in results if not item.success]
     total_duration = time.perf_counter() - started
     initial_results = [item for item in results if item.phase.startswith("initial")]
+    initial_failures = sorted(
+        [item for item in initial_results if not item.success],
+        key=lambda item: (item.index, item.started_offset_seconds, item.phase),
+    )
+    actual_first_failure = initial_failures[0] if initial_failures else None
+    actual_first_failure_index = actual_first_failure.index if actual_first_failure is not None else None
+    actual_first_failure_error = (
+        actual_first_failure.error_type or actual_first_failure.error_message
+        if actual_first_failure is not None
+        else None
+    )
     successes_before_failure = [
         item
         for item in initial_results
-        if item.success and (first_failure_index is None or item.index < first_failure_index)
+        if item.success and (actual_first_failure_index is None or item.index < actual_first_failure_index)
     ]
     placement_failures = [
         item for item in initial_results if item.error_type == "placement_failed"
@@ -469,6 +500,9 @@ def summarize(
     retry_create_seconds = final_retry_result.create_seconds if final_retry_result is not None else None
     retry_started_offset = final_retry_result.started_offset_seconds if final_retry_result is not None else None
     retry_finished_offset = final_retry_result.finished_offset_seconds if final_retry_result is not None else None
+    successful_initial_results = [item for item in initial_results if item.success]
+    max_simultaneous_running = max_overlap_count(successful_initial_results)
+    stable_running_capacity = max_overlap_count(successes_before_failure)
 
     return {
         "total_results": len(results),
@@ -478,11 +512,14 @@ def summarize(
         "total_duration_seconds": round(total_duration, 2),
         "create_seconds_stats": seconds_stats([item.create_seconds for item in results]),
         "command_seconds_stats": seconds_stats([item.command_seconds for item in results]),
-        "first_failure_index": first_failure_index,
-        "first_failure_error": first_failure_error,
+        "first_failure_index": actual_first_failure_index,
+        "first_failure_error": actual_first_failure_error,
+        "first_observed_failure_index": first_observed_failure_index,
+        "first_observed_failure_error": first_observed_failure_error,
+        "initial_success_count_total": len(successful_initial_results),
         "initial_success_count_before_failure": len(successes_before_failure),
-        "max_simultaneous_running_estimate": len(successes_before_failure),
-        "stable_running_capacity_estimate": len(successes_before_failure),
+        "max_simultaneous_running_estimate": max_simultaneous_running,
+        "stable_running_capacity_estimate": stable_running_capacity,
         "earliest_successful_index": earliest_successful_index,
         "first_runtime_failure_index": runtime_failures[0].index if runtime_failures else None,
         "first_placement_failure_index": placement_failures[0].index if placement_failures else None,
@@ -506,8 +543,8 @@ def summarize(
             for item in sorted(initial_results + retry_results, key=lambda item: (item.started_offset_seconds, item.index, item.phase))
         ],
         "note": (
-            "This probe estimates how many sandboxes can stay running at once by creating one every few seconds, "
-            "then retrying after the earliest sandbox finishes."
+            "This probe now computes simultaneous-running estimates from actual [ready, finished) overlap windows. "
+            "The observed failure that stopped new submissions may differ from the lowest worker index that eventually failed."
         ),
     }
 
@@ -565,8 +602,8 @@ def main() -> int:
 
     started = time.perf_counter()
     results: list[ProbeResult] = []
-    first_failure_index: int | None = None
-    first_failure_error: str | None = None
+    first_observed_failure_index: int | None = None
+    first_observed_failure_error: str | None = None
     retry_attempted = False
     retry_success: bool | None = None
     earliest_successful_index: int | None = None
@@ -578,7 +615,7 @@ def main() -> int:
         collected_indexes: set[tuple[int, str]] = set()
 
         def collect_ready_futures(stop_on_first_failure: bool) -> bool:
-            nonlocal first_failure_index, first_failure_error, earliest_successful_index
+            nonlocal first_observed_failure_index, first_observed_failure_error, earliest_successful_index
 
             saw_failure = False
             # 只收集已经结束的 worker，避免阻塞后续 submit 的节奏。
@@ -596,9 +633,9 @@ def main() -> int:
                 if result.success and earliest_successful_index is None:
                     earliest_successful_index = result.index
 
-                if not result.success and first_failure_index is None:
-                    first_failure_index = result.index
-                    first_failure_error = result.error_type or result.error_message
+                if not result.success and first_observed_failure_index is None:
+                    first_observed_failure_index = result.index
+                    first_observed_failure_error = result.error_type or result.error_message
                     print_first_failure(result)
                     saw_failure = True
                     if stop_on_first_failure:
@@ -634,7 +671,7 @@ def main() -> int:
                 if collect_ready_futures(stop_on_first_failure=True):
                     break
 
-        if first_failure_index is None:
+        if first_observed_failure_index is None:
             for future in futures:
                 result = future.result()
                 key = (result.index, result.phase)
@@ -645,31 +682,27 @@ def main() -> int:
                 print_result(result)
                 if result.success and earliest_successful_index is None:
                     earliest_successful_index = result.index
-                if not result.success and first_failure_index is None:
-                    first_failure_index = result.index
-                    first_failure_error = result.error_type or result.error_message
+                if not result.success and first_observed_failure_index is None:
+                    first_observed_failure_index = result.index
+                    first_observed_failure_error = result.error_type or result.error_message
 
-        initial_success_count = len([item for item in results if item.success and item.phase == "initial"])
-
-        if first_failure_index is not None:
+        if first_observed_failure_index is not None:
             earliest_successful_result: ProbeResult | None = None
-            upper_bound = first_failure_index - 1
-            for index in range(1, upper_bound + 1):
-                future = future_by_index.get(index)
-                if future is None:
-                    continue
-                if not future.done():
-                    print_waiting_candidate(index, time.perf_counter() - started)
-                result = future.result()
-                key = (result.index, result.phase)
-                if key not in collected_indexes:
-                    collected_indexes.add(key)
-                    results.append(result)
-                    print_result(result)
-                if result.success:
-                    earliest_successful_index = result.index
-                    earliest_successful_result = result
-                    break
+            retry_target_index = first_observed_failure_index
+
+            if earliest_successful_index is not None:
+                earliest_future = future_by_index.get(earliest_successful_index)
+                if earliest_future is not None:
+                    if not earliest_future.done():
+                        print_waiting_candidate(earliest_successful_index, time.perf_counter() - started)
+                    result = earliest_future.result()
+                    key = (result.index, result.phase)
+                    if key not in collected_indexes:
+                        collected_indexes.add(key)
+                        results.append(result)
+                        print_result(result)
+                    if result.success:
+                        earliest_successful_result = result
 
             if earliest_successful_result is not None:
                 retry_attempted = True
@@ -681,12 +714,12 @@ def main() -> int:
                         time.sleep(args.retry_after_release_seconds)
                     retry_attempt_number += 1
                     print(
-                        f"[RETRY] worker={first_failure_index} attempt={retry_attempt_number} "
+                        f"[RETRY] worker={retry_target_index} attempt={retry_attempt_number} "
                         f"retrying_after={args.retry_after_release_seconds}s"
                     )
                     retry_result = run_worker(
                         started,
-                        first_failure_index,
+                        retry_target_index,
                         domain,
                         api_key,
                         template_id,
@@ -700,9 +733,10 @@ def main() -> int:
                     retry_results.append(retry_result)
                     results.append(retry_result)
                     print_result(retry_result)
-                    # retry 成功后再查一次当前 running 数量，避免把查询延迟算进 retry 起点。
+                    # run_worker returns only after the retry sandbox has finished its full
+                    # hold window and cleanup has run, so this count is explicitly post-run.
                     print_running_count(
-                        f"retry_after_attempt_{retry_attempt_number}",
+                        f"post_retry_completion_attempt_{retry_attempt_number}",
                         domain,
                         api_key,
                         time.perf_counter() - started,
@@ -714,7 +748,7 @@ def main() -> int:
                         )
                         print(
                             "[RETRY_SUCCESS] "
-                            f"worker={first_failure_index} "
+                            f"worker={retry_target_index} "
                             f"attempt={retry_attempt_number} "
                             f"release_to_ready={release_gap}s "
                             f"create={retry_result.create_seconds:.2f}s"
@@ -725,7 +759,7 @@ def main() -> int:
                     if retry_result.error_type != "placement_failed":
                         print(
                             "[RETRY_STOP] "
-                            f"worker={first_failure_index} "
+                            f"worker={retry_target_index} "
                             f"attempt={retry_attempt_number} "
                             f"error_type={retry_result.error_type or '-'}"
                         )
@@ -747,9 +781,8 @@ def main() -> int:
         results=results,
         started=started,
         cleanup=cleanup,
-        first_failure_index=first_failure_index,
-        first_failure_error=first_failure_error,
-        initial_success_count=initial_success_count,
+        first_observed_failure_index=first_observed_failure_index,
+        first_observed_failure_error=first_observed_failure_error,
         retry_attempted=retry_attempted,
         retry_success=retry_success,
         earliest_successful_index=earliest_successful_index,
@@ -786,7 +819,7 @@ def main() -> int:
         output_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
         print(f"json_report: {output_path}")
 
-    return 1 if first_failure_index is not None else 0
+    return 1 if first_observed_failure_index is not None else 0
 
 
 if __name__ == "__main__":

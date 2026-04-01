@@ -99,12 +99,7 @@ resource "google_compute_instance_template" "server" {
     cluster-size            = var.server_cluster_size,
   }
 
-  labels = merge(
-    var.labels,
-    (var.environment != "dev" ? {
-      goog-ops-agent-policy = "v2-x86-template-1-2-0-${var.gcp_zone}"
-    } : {})
-  )
+  labels = var.labels
   scheduling {
     on_host_maintenance = "MIGRATE"
   }
@@ -132,8 +127,6 @@ resource "google_compute_instance_template" "server" {
     scopes = [
       "userinfo-email",
       "compute-ro",
-      "https://www.googleapis.com/auth/monitoring.write",
-      "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/trace.append",
       "https://www.googleapis.com/auth/cloud-platform"
     ]

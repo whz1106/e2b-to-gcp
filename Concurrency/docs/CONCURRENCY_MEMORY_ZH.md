@@ -10,6 +10,13 @@
 - `results/` 和 `plots/` 保留作为历史结果
 - 旧的 burst / staggered / starting-window 脚本已清理，不再作为当前主要入口
 
+当前默认配置记录：
+
+- API 侧 placement `maxStartingInstancesPerNode = 5`
+- node 侧 orchestrator `maxStartingInstancesPerNode = 5`
+- API node cache `cacheSyncTime = 10s`
+- `best-of-k-max-overcommit = 800`，也就是默认 `R = 8`
+
 ---
 
 ## 1. 当前目录约定
@@ -583,3 +590,77 @@ python3 test1/render_probe_table.py results/test1/017.json
 - 过长的过程聊天记录
 - 临时推测但未验证的说法
 - 已删除脚本的详细说明
+
+---
+
+## 15. 当前部署问题记录
+
+时间背景：
+
+- 2026-03-27 这轮为了让新的并发参数生效，尝试重新部署当前 self-hosted E2B `dev` 环境
+
+本轮想生效的改动：
+
+- API 侧 placement `maxStartingInstancesPerNode = 5`
+- node 侧 orchestrator `maxStartingInstancesPerNode = 5`
+- API node cache `cacheSyncTime = 10s`
+- `best-of-k-max-overcommit = 800`，也就是默认 `R = 8`
+
+### 15.1 已确认事实
+
+- 这几个改动本质上是应用层参数，不是基础设施形态变更
+- 正常情况下，不需要重新做 Packer 基础镜像，也不需要整套重构 GCP VM
+- 更合理的最小部署路径应当是：
+  - 重新发布 `api`
+  - 重新发布 `orchestrator`
+  - 重新发布 `template-manager`
+  - 再让 Nomad job 滚动更新
+
+### 15.2 本轮实际踩到的问题
+
+- 本地部署机根盘空间不足
+- Docker build 过程中出现：
+  - `no space left on device`
+- 中途为了续跑，进入了带 `init` / `packer` 的完整部署链路
+- 结果不仅重发了应用层制品，还触发了基础镜像与 MIG 模板更新
+- 后续 GCP 侧进入“VM 正常运行，但入口无健康 upstream”的异常状态
+
+### 15.3 2026-03-27 当前最终观察结果
+
+- 外部健康检查：
+  - `https://api.agentyard.top/health`
+  - 返回 `503`
+  - 返回体为 `no healthy upstream`
+- GCP VM 层面：
+  - `api`
+  - `build`
+  - `client`
+  - `server`
+  - 实例都能看到 `RUNNING`
+- 也就是说当前不是“机器没起来”，而是：
+  - 入口层当前找不到健康的 API upstream
+
+### 15.4 本地与 GCP 清理状态
+
+- 本地已经做过清理：
+  - Docker images / build cache 已清
+  - `packages/api/bin` 已删
+  - `packages/orchestrator/bin` 已删
+  - `.tfplan.dev` 已删
+  - `~/.cache/go-build` 已删
+- GCP 侧当前不继续做“危险清理”：
+  - 坏镜像已从 family 选择链路中排除
+  - 但当前实例模板与 bucket artifact 仍被现网引用
+  - 在环境未恢复前，不应继续手工删当前被引用的模板和 artifact
+
+### 15.5 下次继续时的约束
+
+- 先扩容本地部署机磁盘，再继续
+- 下次不要从完整 `deploy-gcp.sh` / `init` / `packer` 链路开始
+- 应只走最小部署路径：
+  - `make build-and-upload/api`
+  - `make build-and-upload/orchestrator`
+  - `make build-and-upload/template-manager`
+  - 然后再做 job 层收敛
+- 如果目标是“整套环境清空再重来”，那不叫清残留，应明确走：
+  - `destroy dev`
